@@ -1,9 +1,9 @@
 <?php
 
-namespace Freyo\Flysystem\QcloudCOSv5\Tests;
+namespace Freyo\Flysystem\QcloudCOS\Tests;
 
-use Freyo\Flysystem\QcloudCOSv5\Adapter;
-use Freyo\Flysystem\QcloudCOSv5\Plugins\GetFederationToken;
+use Freyo\Flysystem\QcloudCOS\Adapter;
+use Freyo\Flysystem\QcloudCOS\Plugins\GetFederationToken;
 use League\Flysystem\Filesystem;
 use PHPUnit\Framework\TestCase;
 use Qcloud\Cos\Client;
@@ -13,18 +13,18 @@ class GetFederationTokenTest extends TestCase
     public function Provider()
     {
         $config = [
-            'region'      => getenv('COSV5_REGION'),
-            'credentials' => [
-                'appId'     => getenv('COSV5_APP_ID'),
-                'secretId'  => getenv('COSV5_SECRET_ID'),
-                'secretKey' => getenv('COSV5_SECRET_KEY'),
-            ],
-            'timeout'         => getenv('COSV5_TIMEOUT'),
-            'connect_timeout' => getenv('COSV5_CONNECT_TIMEOUT'),
-            'bucket'          => getenv('COSV5_BUCKET'),
-            'cdn'             => getenv('COSV5_CDN'),
-            'scheme'          => getenv('COSV5_SCHEME'),
-            'read_from_cdn'   => getenv('COSV5_READ_FROM_CDN'),
+            'region'      => getenv('COS_REGION'),
+        'credentials' => [
+            'appId'     => getenv('COS_APP_ID'),
+            'secretId'  => getenv('COS_SECRET_ID'),
+            'secretKey' => getenv('COS_SECRET_KEY'),
+        ],
+        'timeout'         => getenv('COS_TIMEOUT'),
+        'connect_timeout' => getenv('COS_CONNECT_TIMEOUT'),
+        'bucket'          => getenv('COS_BUCKET'),
+        'cdn'             => getenv('COS_CDN'),
+        'scheme'          => getenv('COS_SCHEME'),
+        'read_from_cdn'   => getenv('COS_READ_FROM_CDN'),
         ];
 
         $client = new Client($config);

@@ -4,12 +4,12 @@ namespace Jackillll\Flysystem\QcloudCos\Adapters;
 
 use DateTimeInterface;
 use Illuminate\Filesystem\FilesystemAdapter;
-use League\Flysystem\FilesystemOperator;
+use Illuminate\Contracts\Filesystem\Cloud as CloudContract;
 
 /**
  * Extended Filesystem Adapter for Tencent Cloud COS.
  */
-class QcloudCosFilesystemAdapter extends FilesystemAdapter
+class QcloudCosFilesystemAdapter extends FilesystemAdapter implements CloudContract
 {
     /**
      * @var QcloudCosAdapter
@@ -17,17 +17,28 @@ class QcloudCosFilesystemAdapter extends FilesystemAdapter
     protected $adapter;
 
     /**
+     * @var array
+     */
+    protected $config;
+
+    /**
      * Create a new QcloudCosFilesystemAdapter instance.
      *
-     * @param FilesystemOperator $driver
+     * @param \League\Flysystem\FilesystemOperator $driver
      * @param QcloudCosAdapter   $adapter
      * @param array              $config
      */
-    public function __construct(FilesystemOperator $driver, QcloudCosAdapter $adapter, array $config)
+    public function __construct(\League\Flysystem\FilesystemOperator $driver, QcloudCosAdapter $adapter, array $config = [])
     {
-        parent::__construct($driver, $adapter, $config);
         $this->adapter = $adapter;
+        $this->config = $config;
+        
+        // 调用父类构造函数
+        parent::__construct($driver, $adapter, $config);
     }
+
+    // Laravel Filesystem Contract methods
+
 
     /**
      * Get the URL for the file at the given path.

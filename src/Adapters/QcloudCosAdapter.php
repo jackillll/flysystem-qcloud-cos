@@ -128,8 +128,8 @@ class QcloudCosAdapter implements FilesystemAdapter
      */
     public function getSourcePath(string $path): string
     {
-        return sprintf('%s.cos.%s.myqcloud.com/%s',
-            $this->getBucketWithAppId(), $this->getRegion(), $path
+        return sprintf('%s/%s',
+            $this->getBucketWithAppId(), $path
         );
     }
 

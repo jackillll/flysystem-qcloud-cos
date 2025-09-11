@@ -34,10 +34,54 @@
 
   > Support Laravel/Lumen 12.x (PHP 8.2+)
   > For older Laravel versions, please use v2.x
+  > **Also supports standalone PHP projects**
 
   ```shell
-  composer require "jackillll/filesystem-qcloud-cos:^3.0" -vvv
+  composer require "jackillll/flysystem-qcloud-cos:^3.0" -vvv
   ```
+
+## Usage
+
+### For Standalone PHP Projects (Recommended)
+
+For non-Laravel projects, use the factory class for easy setup:
+
+```php
+<?php
+require_once 'vendor/autoload.php';
+
+use Jackillll\Flysystem\QcloudCos\QcloudCosFactory;
+
+// Minimal configuration
+$config = [
+    'region' => 'ap-guangzhou',
+    'credentials' => [
+        'appId' => 'your-app-id',
+        'secretId' => 'your-secret-id',
+        'secretKey' => 'your-secret-key',
+    ],
+    'bucket' => 'your-bucket-name',
+];
+
+// Create extended adapter (recommended)
+$storage = QcloudCosFactory::createExtendedAdapter($config);
+
+// Basic operations
+$storage->put('hello.txt', 'Hello World!');
+$content = $storage->get('hello.txt');
+$url = $storage->url('hello.txt');
+$storage->delete('hello.txt');
+```
+
+**Available Factory Methods:**
+- `QcloudCosFactory::createExtendedAdapter($config)` - Creates extended adapter with Laravel-like methods
+- `QcloudCosFactory::createFilesystem($config)` - Creates basic Flysystem instance
+- `QcloudCosFactory::createClient($config)` - Creates COS client only
+- `QcloudCosFactory::validateConfig($config)` - Validates configuration
+
+**See more examples in the `/examples` directory.**
+
+### For Laravel Projects
 
 ## Bootstrap
 
@@ -139,7 +183,7 @@ bool $flysystem->setVisibility('file.md', 'public'); //or 'private', 'default'
 
 This package supports two driver names for backward compatibility:
 - `qcloud-cos` (recommended for new projects)
-- `cosv5` (for backward compatibility)
+
 
 ### Configuration
 
@@ -167,44 +211,14 @@ This package supports two driver names for backward compatibility:
             'encrypt'         => env('QCLOUD_COS_ENCRYPT', false),
       ],
       
-      // Option 2: Using cosv5 driver (backward compatibility)
-      'cosv5' => [
-            'driver' => 'cosv5',
-            'region'          => env('COSV5_REGION', 'ap-guangzhou'),
-            'credentials'     => [
-                'appId'     => env('COSV5_APP_ID'),
-                'secretId'  => env('COSV5_SECRET_ID'),
-                'secretKey' => env('COSV5_SECRET_KEY'),
-                'token'     => env('COSV5_TOKEN'),
-            ],
-            'timeout'         => env('COSV5_TIMEOUT', 60),
-            'connect_timeout' => env('COSV5_CONNECT_TIMEOUT', 60),
-            'bucket'          => env('COSV5_BUCKET'),
-            'cdn'             => env('COSV5_CDN'),
-            'scheme'          => env('COSV5_SCHEME', 'https'),
-            'read_from_cdn'   => env('COSV5_READ_FROM_CDN', false),
-            'cdn_key'         => env('COSV5_CDN_KEY'),
-            'encrypt'         => env('COSV5_ENCRYPT', false),
-      ],
+
   ],
   ```
 
 3. Configure `.env`:
   
   ```php
-  COSV5_APP_ID=
-  COSV5_SECRET_ID=
-  COSV5_SECRET_KEY=
-  COSV5_TOKEN=null
-  COSV5_TIMEOUT=60
-  COSV5_CONNECT_TIMEOUT=60
-  COSV5_BUCKET=
-  COSV5_REGION=ap-guangzhou
-  COSV5_CDN=
-  COSV5_SCHEME=https
-  COSV5_READ_FROM_CDN=false
-  COSV5_CDN_KEY=
-  COSV5_ENCRYPT=false
+  
   ```
 
 ## Use in Lumen
@@ -225,31 +239,19 @@ This package supports two driver names for backward compatibility:
 2. And this:
   
   ```php
-  $app->register(Freyo\Flysystem\QcloudCOSv5\ServiceProvider::class);
+  $app->register(Freyo\Flysystem\QcloudCOS\ServiceProvider::class);
   ```
 
 3. Configure `.env`:
   
   ```php
-  COSV5_APP_ID=
-  COSV5_SECRET_ID=
-  COSV5_SECRET_KEY=
-  COSV5_TOKEN=null
-  COSV5_TIMEOUT=60
-  COSV5_CONNECT_TIMEOUT=60
-  COSV5_BUCKET=
-  COSV5_REGION=ap-guangzhou
-  COSV5_CDN=
-  COSV5_SCHEME=https
-  COSV5_READ_FROM_CDN=false
-  COSV5_CDN_KEY=
-  COSV5_ENCRYPT=false
+  
   ```
 
 ### Usage
 
 ```php
-$disk = Storage::disk('cosv5');
+$disk = Storage::disk('qcloud-cos');
 
 // create a file
 $disk->put('avatars/1', $fileContents);

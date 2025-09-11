@@ -1,9 +1,9 @@
 <?php
 
-namespace Freyo\Flysystem\QcloudCOSv5\Tests;
+namespace Freyo\Flysystem\QcloudCOS\Tests;
 
 use Carbon\Carbon;
-use Freyo\Flysystem\QcloudCOSv5\Adapter;
+use Freyo\Flysystem\QcloudCOS\Adapter;
 use League\Flysystem\Config;
 use League\Flysystem\FilesystemAdapter;
 use PHPUnit\Framework\TestCase;
@@ -14,19 +14,19 @@ class AdapterTest extends TestCase
     public function Provider()
     {
         $config = [
-            'region'          => getenv('COSV5_REGION'),
-            'credentials'     => [
-                'appId'     => getenv('COSV5_APP_ID'),
-                'secretId'  => getenv('COSV5_SECRET_ID'),
-                'secretKey' => getenv('COSV5_SECRET_KEY'),
-            ],
-            'timeout'         => getenv('COSV5_TIMEOUT'),
-            'connect_timeout' => getenv('COSV5_CONNECT_TIMEOUT'),
-            'bucket'          => getenv('COSV5_BUCKET'),
-            'cdn'             => getenv('COSV5_CDN'),
-            'scheme'          => getenv('COSV5_SCHEME'),
-            'read_from_cdn'   => getenv('COSV5_READ_FROM_CDN'),
-            'encrypt'         => getenv('COSV5_ENCRYPT'),
+            'region'      => getenv('COS_REGION'),
+        'credentials' => [
+            'appId'     => getenv('COS_APP_ID'),
+            'secretId'  => getenv('COS_SECRET_ID'),
+            'secretKey' => getenv('COS_SECRET_KEY'),
+        ],
+        'timeout'         => getenv('COS_TIMEOUT'),
+        'connect_timeout' => getenv('COS_CONNECT_TIMEOUT'),
+        'bucket'          => getenv('COS_BUCKET'),
+        'cdn'             => getenv('COS_CDN'),
+        'scheme'          => getenv('COS_SCHEME'),
+        'read_from_cdn'   => getenv('COS_READ_FROM_CDN'),
+            'encrypt'         => getenv('COS_ENCRYPT'),
         ];
 
         $cosApi = new Client($config);

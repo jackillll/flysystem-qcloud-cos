@@ -23,7 +23,7 @@ $flysystem->addPlugin(new GetUrl());
 **v3.x (新版本)**:
 ```php
 // 功能已集成到扩展适配器中
-$disk = Storage::disk('cosv5');
+$disk = Storage::disk('qcloud-cos');
 $url = $disk->url('path/to/file');
 $disk->putRemoteFile('path', 'http://example.com/file.jpg');
 ```
@@ -63,7 +63,7 @@ class Adapter implements FilesystemAdapter
 **v2.x**:
 ```php
 $this->app->make('filesystem')
-          ->extend('cosv5', function ($app, $config) {
+          ->extend('qcloud-cos', function ($app, $config) {
               $client = new Client($config);
               $flysystem = new Filesystem(new Adapter($client, $config), $config);
               
@@ -76,11 +76,11 @@ $this->app->make('filesystem')
 
 **v3.x**:
 ```php
-Storage::extend('cosv5', function (Application $app, array $config) {
+Storage::extend('qcloud-cos', function (Application $app, array $config) {
     $client = new Client($config);
     $adapter = new Adapter($client, $config);
     
-    return new QcloudCOSv5FilesystemAdapter(
+    return new QcloudCOSFilesystemAdapter(
         new Filesystem($adapter, $config),
         $adapter,
         $config
@@ -106,7 +106,7 @@ composer require "jackillll/filesystem-qcloud-cos:^3.0"
 
 **旧代码**:
 ```php
-$disk = Storage::disk('cosv5');
+$disk = Storage::disk('qcloud-cos');
 
 // 这些方法在 v3.x 中不再可用
 $url = $disk->getUrl('path/to/file');
@@ -153,26 +153,26 @@ php test_upgrade.php
 
 ## 配置变更
 
-配置文件 `config/filesystems.php` 中的 `cosv5` 配置保持不变：
+配置文件 `config/filesystems.php` 中的 `qcloud-cos` 配置保持不变：
 
 ```php
 'qcloud-cos' => [
     'driver'         => 'qcloud-cos',
-    'region'         => env('COSV5_REGION', 'ap-guangzhou'),
+    'region'         => env('COS_REGION', 'ap-guangzhou'),
     'credentials'    => [
-        'appId'      => env('COSV5_APP_ID'),
-        'secretId'   => env('COSV5_SECRET_ID'),
-        'secretKey'  => env('COSV5_SECRET_KEY'),
-        'token'      => env('COSV5_TOKEN'),
+        'appId'      => env('COS_APP_ID'),
+        'secretId'   => env('COS_SECRET_ID'),
+        'secretKey'  => env('COS_SECRET_KEY'),
+        'token'      => env('COS_TOKEN'),
     ],
-    'timeout'            => env('COSV5_TIMEOUT', 60),
-    'connect_timeout'    => env('COSV5_CONNECT_TIMEOUT', 60),
-    'bucket'             => env('COSV5_BUCKET'),
-    'cdn'                => env('COSV5_CDN'),
-    'scheme'             => env('COSV5_SCHEME', 'https'),
-    'read_from_cdn'      => env('COSV5_READ_FROM_CDN', false),
-    'cdn_key'            => env('COSV5_CDN_KEY'),
-    'encrypt'            => env('COSV5_ENCRYPT', false),
+    'timeout'            => env('COS_TIMEOUT', 60),
+    'connect_timeout'    => env('COS_CONNECT_TIMEOUT', 60),
+    'bucket'             => env('COS_BUCKET'),
+    'cdn'                => env('COS_CDN'),
+    'scheme'             => env('COS_SCHEME', 'https'),
+    'read_from_cdn'      => env('COS_READ_FROM_CDN', false),
+    'cdn_key'            => env('COS_CDN_KEY'),
+    'encrypt'            => env('COS_ENCRYPT', false),
 ],
 ```
 

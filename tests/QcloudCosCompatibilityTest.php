@@ -2,8 +2,8 @@
 
 namespace Jackillll\Filesystem\QcloudCos\Tests;
 
-use Jackillll\Filesystem\QcloudCos\Adapters\QcloudCosAdapter;
-use Jackillll\Filesystem\QcloudCos\Adapters\QcloudCosFilesystemAdapter;
+use Freyo\Flysystem\QcloudCOS\Adapter as QcloudCOSAdapter;
+use Freyo\Flysystem\QcloudCOS\QcloudCOSFilesystemAdapter;
 use League\Flysystem\Config;
 use League\Flysystem\Filesystem;
 use PHPUnit\Framework\TestCase;
@@ -39,9 +39,9 @@ class QcloudCosCompatibilityTest extends TestCase
         // 注意：这里使用模拟配置，实际测试需要真实的COS配置
         try {
             $client = new Client($this->config);
-            $this->adapter = new QcloudCosAdapter($client, $this->config);
+            $this->adapter = new QcloudCOSAdapter($client, $this->config);
             $this->filesystem = new Filesystem($this->adapter, $this->config);
-            $this->extendedAdapter = new QcloudCosFilesystemAdapter(
+            $this->extendedAdapter = new QcloudCOSFilesystemAdapter(
                 $this->filesystem,
                 $this->adapter,
                 $this->config
