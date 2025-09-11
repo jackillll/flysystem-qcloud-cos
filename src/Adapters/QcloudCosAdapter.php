@@ -541,11 +541,11 @@ class QcloudCosAdapter implements FilesystemAdapter
             $options['ServerSideEncryption'] = 'AES256';
         }
 
-        if ($config->has('params')) {
+        if ($config->get('params') !== null) {
             $options = array_merge($options, $config->get('params'));
         }
 
-        if ($config->has('visibility')) {
+        if ($config->get('visibility') !== null) {
             $options['ACL'] = $this->normalizeVisibility($config->get('visibility'));
         }
 
