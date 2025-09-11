@@ -433,8 +433,17 @@ class QcloudCosAdapter implements FilesystemAdapter
     public function move(string $source, string $destination, Config $config): void
     {
         try {
+            // 先复制文件
             $this->copy($source, $destination, $config);
-            $this->delete($source);
+            
+            // 只有复制成功后才删除源文件
+            try {
+                $this->delete($source);
+            } catch (ServiceResponseException $deleteException) {
+                // 如果删除失败，记录错误但不影响移动操作的成功状态
+                // 因为文件已经成功复制到目标位置
+                error_log('Warning: Failed to delete source file after successful copy: ' . $deleteException->getMessage());
+            }
         } catch (ServiceResponseException $e) {
             throw UnableToMoveFile::fromLocationTo($source, $destination, $e);
         }
