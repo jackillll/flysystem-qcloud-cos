@@ -1,40 +1,48 @@
 {
-    "name": "freyo/flysystem-qcloud-cos-v5",
-    "description": "Flysystem Adapter for Tencent Qcloud COS SDK V5",
-    "keywords": ["flysystem-adapter", "qcloud-sdk", "qcloud", "qcloud-cos"],
-    "require": {
-        "php": ">=5.5.0",
-        "league/flysystem": "^1.0 || ^2.0 || ^3.0",
-        "guzzlehttp/guzzle": "~6.0 || ^7.0",
-        "qcloud/cos-sdk-v5": "^2.0 || dev-guzzle7",
-        "nesbot/carbon": "~1.0 || ^2.0",
-        "ext-json": "*"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "~4.8"
-    },
-    "autoload": {
-        "psr-4": {
-            "Freyo\\Flysystem\\QcloudCOSv5\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Freyo\\Flysystem\\QcloudCOSv5\\Tests\\": "tests"
-        }
-    },
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "freyo",
-            "email": "freyhsiao@gmail.com"
-        }
-    ],
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Freyo\\Flysystem\\QcloudCOSv5\\ServiceProvider"
-            ]
-        }
+  "name": "jackillll/flysystem-qcloud-cos",
+  "description": "Flysystem Adapter for Tencent Qcloud COS SDK V5",
+  "keywords": [
+    "flysystem-adapter",
+    "qcloud-sdk",
+    "qcloud",
+    "qcloud-cos"
+  ],
+  "require": {
+    "php": "^8.2",
+    "league/flysystem": "^3.0",
+    "guzzlehttp/guzzle": "^7.0",
+    "qcloud/cos-sdk-v5": "^2.0",
+    "nesbot/carbon": "^3.0",
+    "ext-json": "*",
+    "illuminate/filesystem": "^12.0",
+    "illuminate/support": "^12.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^11.0",
+    "orchestra/testbench": "^10.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Jackillll\\Flysystem\\QcloudCos\\": "src/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Jackillll\\Flysystem\\QcloudCos\\Tests\\": "tests"
+    }
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "freyo",
+      "email": "freyhsiao@gmail.com"
+    }
+  ],
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Jackillll\\Flysystem\\QcloudCos\\Providers\\QcloudCosServiceProvider"
+      ]
+    }
+  }
 }

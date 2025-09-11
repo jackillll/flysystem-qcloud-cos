@@ -2,7 +2,7 @@
   <p align="center">
     <image src="https://imgcache.qq.com/open_proj/proj_qcloud_v2/international/doc/css/img/icon/icon-storage.svg" width="150" height="150">
   </p>
-  <p align="center">Flysystem Adapter for <a href="https://github.com/tencentyun/cos-php-sdk-v5">Tencent Cloud Object Storage</a></p>
+  <p align="center">Elegant Filesystem Adapter for <a href="https://github.com/tencentyun/cos-php-sdk-v5">Tencent Cloud Object Storage</a></p>
   <p align="center">
     <a href="LICENSE">
       <image src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square" alt="Software License">
@@ -32,17 +32,18 @@
 
 ## Installation
 
-  > Support Laravel/Lumen 5.x/6.x/7.x/8.x
+  > Support Laravel/Lumen 12.x (PHP 8.2+)
+  > For older Laravel versions, please use v2.x
 
   ```shell
-  composer require "freyo/flysystem-qcloud-cos-v5:^2.0" -vvv
+  composer require "jackillll/filesystem-qcloud-cos:^3.0" -vvv
   ```
 
 ## Bootstrap
 
   ```php
   <?php
-  use Freyo\Flysystem\QcloudCOSv5\Adapter;
+  use Jackillll\Filesystem\QcloudCos\Adapters\QcloudCosAdapter;
   use League\Flysystem\Filesystem;
   use Qcloud\Cos\Client;
 
