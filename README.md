@@ -43,11 +43,28 @@
 
   ```php
   <?php
-  use Jackillll\Filesystem\QcloudCos\Adapters\QcloudCosAdapter;
+  use Jackillll\Flysystem\QcloudCos\Adapters\QcloudCosAdapter;
   use League\Flysystem\Filesystem;
   use Qcloud\Cos\Client;
 
   include __DIR__ . '/vendor/autoload.php';
+
+  // Configuration
+  $config = [
+      'region' => 'ap-guangzhou',
+      'credentials' => [
+          'appId' => 'your-app-id',
+          'secretId' => 'your-secret-id', 
+          'secretKey' => 'your-secret-key',
+      ],
+      'bucket' => 'your-bucket',
+      'cdn' => 'https://your-cdn-domain.com',
+      'scheme' => 'https',
+  ];
+
+  $client = new Client($config);
+  $adapter = new QcloudCosAdapter($client, $config);
+  $flysystem = new Filesystem($adapter, $config);
 
   $config = [
       'region'          => 'ap-guangzhou',
@@ -116,22 +133,41 @@ bool $flysystem->setVisibility('file.md', 'public'); //or 'private', 'default'
 
 ## Use in Laravel
   
-**Laravel 5.5+ uses Package Auto-Discovery, so doesn't require you to manually add the ServiceProvider.**
+**Laravel 12+ uses Package Auto-Discovery, so doesn't require you to manually add the ServiceProvider.**
 
-1. Register the service provider in `config/app.php`:
+### Driver Names
 
-  ```php
-  'providers' => [
-    // ...
-    Freyo\Flysystem\QcloudCOSv5\ServiceProvider::class,
-  ]
-  ```
+This package supports two driver names for backward compatibility:
+- `qcloud-cos` (recommended for new projects)
+- `cosv5` (for backward compatibility)
 
-2. Configure `config/filesystems.php`:
+### Configuration
+
+1. Configure `config/filesystems.php` with either driver:
 
   ```php
   'disks'=>[
-      // ...
+      // Option 1: Using qcloud-cos driver (recommended)
+      'qcloud-cos' => [
+            'driver' => 'qcloud-cos',
+            'region'          => env('QCLOUD_COS_REGION', 'ap-guangzhou'),
+            'credentials'     => [
+                'appId'     => env('QCLOUD_COS_APP_ID'),
+                'secretId'  => env('QCLOUD_COS_SECRET_ID'),
+                'secretKey' => env('QCLOUD_COS_SECRET_KEY'),
+                'token'     => env('QCLOUD_COS_TOKEN'),
+            ],
+            'timeout'         => env('QCLOUD_COS_TIMEOUT', 60),
+            'connect_timeout' => env('QCLOUD_COS_CONNECT_TIMEOUT', 60),
+            'bucket'          => env('QCLOUD_COS_BUCKET'),
+            'cdn'             => env('QCLOUD_COS_CDN'),
+            'scheme'          => env('QCLOUD_COS_SCHEME', 'https'),
+            'read_from_cdn'   => env('QCLOUD_COS_READ_FROM_CDN', false),
+            'cdn_key'         => env('QCLOUD_COS_CDN_KEY'),
+            'encrypt'         => env('QCLOUD_COS_ENCRYPT', false),
+      ],
+      
+      // Option 2: Using cosv5 driver (backward compatibility)
       'cosv5' => [
             'driver' => 'cosv5',
             'region'          => env('COSV5_REGION', 'ap-guangzhou'),

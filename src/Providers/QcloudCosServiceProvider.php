@@ -27,7 +27,8 @@ class QcloudCosServiceProvider extends ServiceProvider
             $this->app->configure('filesystems');
         }
 
-        Storage::extend('qcloud-cos', function (Application $app, array $config) {
+        // Register both 'qcloud-cos' and 'cosv5' drivers for backward compatibility
+        $driverCallback = function (Application $app, array $config) {
             $client = new Client($config);
             $adapter = new QcloudCosAdapter($client, $config);
             
@@ -36,7 +37,10 @@ class QcloudCosServiceProvider extends ServiceProvider
                 $adapter,
                 $config
             );
-        });
+        };
+        
+        Storage::extend('qcloud-cos', $driverCallback);
+        Storage::extend('cosv5', $driverCallback);
     }
 
     /**

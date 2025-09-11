@@ -82,6 +82,26 @@ return [
             'encrypt'            => env('QCLOUD_COS_ENCRYPT', false),
         ],
 
+        // Backward compatibility - same as qcloud-cos but with cosv5 driver name
+        'cosv5' => [
+            'driver'         => 'cosv5',
+            'region'         => env('COSV5_REGION', 'ap-guangzhou'),
+            'credentials'    => [
+                'appId'      => env('COSV5_APP_ID'),
+                'secretId'   => env('COSV5_SECRET_ID'),
+                'secretKey'  => env('COSV5_SECRET_KEY'),
+                'token'      => env('COSV5_TOKEN'),
+            ],
+            'timeout'            => env('COSV5_TIMEOUT', 60),
+            'connect_timeout'    => env('COSV5_CONNECT_TIMEOUT', 60),
+            'bucket'             => env('COSV5_BUCKET'),
+            'cdn'                => env('COSV5_CDN'),
+            'scheme'             => env('COSV5_SCHEME', 'https'),
+            'read_from_cdn'      => env('COSV5_READ_FROM_CDN', false),
+            'cdn_key'            => env('COSV5_CDN_KEY'),
+            'encrypt'            => env('COSV5_ENCRYPT', false),
+        ],
+
     ],
 
 ];
