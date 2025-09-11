@@ -55,3 +55,7 @@ pids
 # Cache
 .cache
 *.cache
+
+# Test files (temporary)
+test_*.php
+!/tests/
