@@ -1,6 +1,6 @@
 {
   "name": "jackillll/flysystem-qcloud-cos",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Flysystem Adapter for Tencent Qcloud COS SDK V5",
   "keywords": [
     "flysystem-adapter",
