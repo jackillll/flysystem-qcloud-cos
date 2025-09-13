@@ -155,7 +155,16 @@ class QcloudCosAdapter implements FilesystemAdapter
     public function getUrl(string $path): string
     {
         if ($this->config['cdn']) {
-            return $this->prefixer->prefixPath($path);
+            // 如果路径已经是完整的http/https URL，直接返回
+            if (preg_match('/^https?:\/\//', $path)) {
+                return $path;
+            }
+            
+            // 确保CDN域名以/结尾，路径不以/开头，避免双斜杠
+            $cdnUrl = rtrim($this->config['cdn'], '/');
+            $filePath = ltrim($path, '/');
+            
+            return $cdnUrl . '/' . $filePath;
         }
 
         $options = [
